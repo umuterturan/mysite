@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "post-detail.css" %}">
+{% endblock %}    
+
+{% block content %}
+    <section id="summary">
+        <h2>{{ post.title }}</h2>
+        <div>
+            {% for tag in post_tags %}
+            <span class="tag"> {{tag.caption}} </span>
+            {% endfor %}
+        </div>
+        <article>
+            <img src="{{post.image.url}}" alt="{{ post.title }}">
+            <h1><a href="{% url "author-page" author_slug=post.author.slug %}">{{ post.author }}</a></h1>
+            
+            <div>
+                Last updated on <time>{{ post.date2|date:"d M Y" }}</time>
+            </div>
+        </article>
+    </section>
+
+    <main>
+        {{ post.content|linebreaks }}
+    </main>
+{% endblock %} 
